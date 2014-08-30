@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>My fav books</title>
+<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+I love reading books and following are some of my favourites.
+
+<div class="spacer"></div>
+
+<div>
+<table id="my-books">
+	<thead>
+		<th>No.</th><th>Title</th><th>Author</th><th>Drag/Drop Allowed?</th>
+	</thead>
+	<tbody>
+		<tr class="nodrop nodrag">
+			<td>1</td><td>Let Us C</td><td>Yashwant Kanektar</td><td class="dragAllowed">N</td>
+		<tr class="nodrop nodrag">
+			<td>2</td><td>Let Us C++</td><td>Yashwant Kanektar</td><td class="dragAllowed">N</td>
+		</tr>
+			<td>3</td><td>JavaScript The Good Parts</td><td>Douglous Crockford</td><td class="dragAllowed">Y</td>
+		</tr>
+		<tr>
+			<td>4</td><td>Vim 101 Hacks</td><td>Ramesh Natarajan</td><td class="dragAllowed">Y</td>
+		<tr>
+			<td>5</td><td>Networking Programming in Java</td><td>Unknown</td><td class="dragAllowed">Y</td>
+		</tr>
+		<tr>
+			<td>6</td><td>Windows Programming</td><td>Charles Petzold</td><td class="dragAllowed">Y</td>
+		<tr>
+			<td>7</td><td>Linux 101 Hacks</td><td>Ramesh Natarajan</td><td class="dragAllowed">Y</td>
+		<tr>
+			<td>8</td><td>Pro Git</td><td>Git Team</td><td class="dragAllowed">Y</td>
+		<tr>
+			<td>9</td><td>Scala</td><td>Martin Odowski</td><td class="dragAllowed">Y</td>
+		</tr>
+		<tr>
+			<td>10</td><td>JUnit In Action</td><td>Manning</td><td class="dragAllowed">Y</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div class="spacer"></div>
+Add to the Above list
+<div class="spacer"></div>
+
+<div class="dynamic">
+	<span><label>Book Title:</label> <input id="title" size="60"></span>
+	<span><label>Author:</label> <input id="author" size="30">
+			<label>Drag/Drop Allowed?</label> <input type="checkbox" id="chkDraggable"></input>
+	</span>
+	<span><button id="add">Add</button></span>
+</div>
+
+<div class="spacer"></div>
+
+<div class="modify">
+	Modify Row <input type="text" id="tableRow" value="10"> to 
+	<input type="radio" name="rowAction" id="rowAction" value="draggable" > Draggable
+	<input type="radio" name="rowAction" id="rowAction" value="notDraggable" checked="checked"> Not Draggable
+	<button id="doModify">Do It</button>
+</div>
+
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+ <script src="../js/jquery.tablednd.js"></script>
+ <script>
+  $(function(){
+	 $('#my-books').tableDnD();
+	 
+	 $('#add').click(function(){
+		var title = $('#title').val();
+		var author = $('#author').val();
+		var isDragDropAllowed =  $('#chkDraggable').is(':checked');
+		var draggable = isDragDropAllowed ? 'Y' : 'N';
+		
+		//var newRow = isDragDropAllowed ? '<tr>' : '<tr class="nodrop nodrag">'; 
+		var newRow = '<tr>';
+		$("#my-books").find('tbody:last').append(newRow + '<td>?</td> <td>'+ title +'</td> <td>' + author + '</td><td class="dragAllowed">' + draggable + '</td></tr>')
+		
+		var $lastTR = $('#my-books').find('tr:last');
+		if(!isDragDropAllowed){
+			$lastTR.addClass('nodrop nodrag');
+		}
+		
+		//After the table is added new rows, fire an event on the table
+		$('#my-books').tableDnDUpdate();
+	 });
+	 
+	 
+	 $("#doModify").click(function(){
+		var action = $("#rowAction:checked").val();
+		var allowDrag = action == "draggable";
+		
+		var rowNum = $("#tableRow").val();
+		
+		var row = $("#my-books tr").eq(rowNum);
+		var td = row.find("td").eq(3);
+		
+		if(allowDrag){
+			row.removeClass('nodrop nodrag');
+			td.text('Y');
+		}else{
+			row.removeClass('tDnD_whileDrag');
+			row.addClass("nodrop nodrag");
+			td.text('N');
+		}
+		
+		$('#my-books').tableDnDUpdate();
+	 });
+	 
+  });
+ </script>
+</body>
+</html>

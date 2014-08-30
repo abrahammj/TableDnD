@@ -1,0 +1,24 @@
+
+.dynamic span{
+	display: block;
+}
+
+.nodrop, .nodrag {
+	background-color: #00FFFF
+}
+
+.spacer {
+	height: 25px;
+}
+
+.dragAllowed {
+	text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+	border: 1px solid black;
+}
