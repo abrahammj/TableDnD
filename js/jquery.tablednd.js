@@ -249,6 +249,8 @@ window.jQuery.tableDnD = {
                             return false;
                         }
                     }).css("cursor", "move"); // Store the tableDnD object
+                }else{
+                	$(this).unbind(startEvent).css("cursor", "auto");
                 }
             });
     },
