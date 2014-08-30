@@ -237,6 +237,7 @@ window.jQuery.tableDnD = {
                     $.tableDnD.initialiseDrag($(this).parents('tr')[0], table, this, e, config);
                     return false;
                 });
+		//TODO Needed to unbind events incase of updated rows
             })
             // For backwards compatibility, we add the event to the whole row
             // get all the rows as a wrapped set
@@ -250,6 +251,8 @@ window.jQuery.tableDnD = {
                         }
                     }).css("cursor", "move"); // Store the tableDnD object
                 }else{
+			//I know its not so perfect as it will take out all the bound events,
+			//TODO take out only the relevant event.
                 	$(this).unbind(startEvent).css("cursor", "auto");
                 }
             });
